@@ -74,5 +74,13 @@ RSpec.describe 'Merchant discount index page', type: :feature do
       expect(page).to_not have_content("#{@discount_1.percent}%")
       expect(page).to_not have_content(@discount_1.threshold)
     end
+
+    it "takes me to the discount show page when the link is clicked" do
+        visit "/merchant/#{@merchant.id}/discounts"
+
+        click_link("##{@discount_1.id}")
+
+        expect(current_path).to eq(merchant_discount_path(@merchant.id, @discount_1.id))
+      end
   end
 end
