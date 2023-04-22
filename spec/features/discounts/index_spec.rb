@@ -26,34 +26,53 @@ RSpec.describe 'Merchant discount index page', type: :feature do
       visit "/merchant/#{@merchant.id}/discounts"
 
       within("#discount-list") do
+        within("#discount_#{@discount_1.id}") do
           expect(page).to have_link("##{@discount_1.id}")
           expect(page).to have_content("#{@discount_1.percent}%")
           expect(page).to have_content(@discount_1.threshold)
+        end
 
+        within("#discount_#{@discount_2.id}") do
           expect(page).to have_link("##{@discount_2.id}")
           expect(page).to have_content("#{@discount_2.percent}%")
           expect(page).to have_content(@discount_2.threshold)
+        end
 
-
+        within("#discount_#{@discount_3.id}") do
           expect(page).to have_link("##{@discount_3.id}")
           expect(page).to have_content("#{@discount_3.percent}%")
           expect(page).to have_content(@discount_3.threshold)
-       
+        end
+
+        within("#discount_#{@discount_4.id}") do
           expect(page).to have_link("##{@discount_4.id}")
           expect(page).to have_content("#{@discount_4.percent}%")
           expect(page).to have_content(@discount_4.threshold)
+        end
       end
     end
 
     it "shows a button to create a new discount and when clicked on I am taken to a page to create a discount" do
       visit "merchant/#{@merchant.id}/discounts"
-      
+
       within("#header") do
         expect(page).to have_button("Create Discount")
         click_button("Create Discount")
       end
 
       expect(current_path).to eq("/merchant/#{@merchant.id}/discounts/new")
+    end
+
+    it 'shows a button to delete a discount' do
+      visit "/merchant/#{@merchant.id}/discounts"
+      expect(page).to have_button("Delete Discount")
+      within("#discount_#{@discount_1.id}") do
+        click_button("Delete Discount")
+      end
+
+      expect(page).to_not have_link("##{@discount_1.id}")
+      expect(page).to_not have_content("#{@discount_1.percent}%")
+      expect(page).to_not have_content(@discount_1.threshold)
     end
   end
 end
