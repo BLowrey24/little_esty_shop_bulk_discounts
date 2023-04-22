@@ -44,5 +44,16 @@ RSpec.describe 'Merchant discount index page', type: :feature do
           expect(page).to have_content(@discount_4.threshold)
       end
     end
+
+    it "shows a button to create a new discount and when clicked on I am taken to a page to create a discount" do
+      visit "merchant/#{@merchant.id}/discounts"
+      
+      within("#header") do
+        expect(page).to have_button("Create Discount")
+        click_button("Create Discount")
+      end
+
+      expect(current_path).to eq("/merchant/#{@merchant.id}/discounts/new")
+    end
   end
 end
