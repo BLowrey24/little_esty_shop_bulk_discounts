@@ -1,0 +1,48 @@
+require 'rails_helper'
+
+RSpec.describe 'Merchant discount index page', type: :feature do
+  before :each do
+    @merchant = Merchant.create!(name: "Merchant", status: 0)
+
+    @discount_1 = @merchant.discounts.create!(percent: 10, threshold: 10)
+    @discount_2 = @merchant.discounts.create!(percent: 20, threshold: 20)
+    @discount_3 = @merchant.discounts.create!(percent: 30, threshold: 30)
+    @discount_4 = @merchant.discounts.create!(percent: 40, threshold: 40)
+  end
+  describe 'when I visit a merchants dashboard' do
+    it 'I see a link that can take me to the discount index page' do
+      visit "merchant/#{@merchant.id}/dashboard"
+      
+      within(".navbar-nav") do
+        expect(page).to have_link("Discounts")
+        click_link "Discounts"
+        expect(current_path).to eq("/merchant/#{@merchant.id}/discounts")
+      end
+    end
+  end
+
+  describe "when I visit the Merchants discounts index page it" do
+    it "shows all discounts, including percent and threshold" do
+      visit "/merchant/#{@merchant.id}/discounts"
+
+      within("#discount-list") do
+          expect(page).to have_link("##{@discount_1.id}")
+          expect(page).to have_content("#{@discount_1.percent}%")
+          expect(page).to have_content(@discount_1.threshold)
+
+          expect(page).to have_link("##{@discount_2.id}")
+          expect(page).to have_content("#{@discount_2.percent}%")
+          expect(page).to have_content(@discount_2.threshold)
+
+
+          expect(page).to have_link("##{@discount_3.id}")
+          expect(page).to have_content("#{@discount_3.percent}%")
+          expect(page).to have_content(@discount_3.threshold)
+       
+          expect(page).to have_link("##{@discount_4.id}")
+          expect(page).to have_content("#{@discount_4.percent}%")
+          expect(page).to have_content(@discount_4.threshold)
+      end
+    end
+  end
+end
