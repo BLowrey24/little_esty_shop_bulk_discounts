@@ -1,9 +1,2 @@
-<%= form_with url: merchant_discounts_path(@merchant), method: :post, local: true do |form| %>
-    <%= form.label "Percent Discount" %>
-    <%= form.number_field :percent %><br>
-
-    <%= form.label "Item Threshold" %>
-    <%= form.number_field :threshold %><br>
-
-    <%= form.submit 'Create Discount'%>
-  <% end %>
+<h1>New Discount</h1>
+<%= render partial: "form", locals: {url: merchant_discounts_path(@merchant), method: :post, percent: @discount.percent, threshold: @discount.threshold, submit: 'Create Discount'}%>
