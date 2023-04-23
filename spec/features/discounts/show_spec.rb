@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "discount show page", type: :feature do
-  before :each do
+  before(:each) do
     @merchant = Merchant.create!(name: "Merchant", status: 0)
 
     @discount_1 = @merchant.discounts.create!(percent: 10, threshold: 50)
@@ -19,6 +19,15 @@ RSpec.describe "discount show page", type: :feature do
       expect(page).to_not have_content("Discount ID: ##{@discount_2.id}")
       expect(page).to_not have_content("Percent: #{@discount_2.percent}%")
       expect(page).to_not have_content("Threshold: #{@discount_2.threshold}")
+    end
+
+    it 'should have a button that allows me to edit the discount' do
+      visit merchant_discount_path(@merchant.id, @discount_1.id)
+
+      expect(page).to have_button("Edit")
+      click_button("Edit")
+
+      expect(current_path).to eq(edit_merchant_discount_path(@merchant.id, @discount_1.id))
     end
   end
 end

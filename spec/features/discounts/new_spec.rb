@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "discount new page" do
-  before :each do
+  before(:each) do
     @merchant = Merchant.create!(name: "Name 1")
   end
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Merchant discount index page', type: :feature do
-  before :each do
+  before(:each) do
     @merchant = Merchant.create!(name: "Merchant", status: 0)
 
     @discount_1 = @merchant.discounts.create!(percent: 10, threshold: 10)
