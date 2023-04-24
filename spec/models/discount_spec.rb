@@ -15,9 +15,7 @@ RSpec.describe Discount, type: :model do
   describe "validations" do
     it {should validate_presence_of :threshold}
     it {should validate_presence_of :percent}
-    # it 'should validate the percent attribute and the threshold attribute' do
-    #   expect(@discount_1).to_not be_valid
-    #   expect(@discount_2).to_not be_valid
-    # end
+    it {should validate_numericality_of(:percent)}
+    it {should validate_numericality_of(:threshold)}
   end
 end
