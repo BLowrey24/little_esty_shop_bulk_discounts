@@ -54,7 +54,6 @@ RSpec.describe "Discount edit page", type: :feature do
       
       fill_in :percent, with: 0
       click_button(:Update)
-      save_and_open_page
       expect(page).to have_content("All fields must be filled above 0 and below 100.")
     end
   end
